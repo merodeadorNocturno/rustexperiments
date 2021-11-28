@@ -43,11 +43,14 @@ pub struct Palindrome {
 }
 
 fn reverse_digits(num: u128) -> u128 {
-  let digits: Vec<_> = num.to_string().chars().map(|d| d.to_digit(10).unwrap()).collect();
-  let reverse_digits: Vec<_> = digits.iter().rev().collect();
-  let joined: String = reverse_digits.iter().map(|digit| digit.to_string()).collect();
-  let numeric: u128 = joined.parse().unwrap();
-
+  let digits: String = num.to_string()
+    .chars()
+    .map(|d| d.to_digit(10).unwrap())
+    .rev()
+    .map(|digit| digit.to_string())
+    .collect();
+  
+  let numeric: u128 = digits.parse().unwrap();
   numeric
 }
 
@@ -77,12 +80,15 @@ fn main() {
     let my_collatz = collatz(number, &my_vec);
 
     let palindrome = suma_reverse(177, &my_acc);
+    println!("");
+    println!("PALINDROMES");
     println!(
       "jumps: {}, values: {:?}, palindrome: {}",
       palindrome.jumps, palindrome.values, palindrome.palindrome
     );
 
-
+    println!("");
+    println!("COLLATZ");
     println!(
       "loops in: {},  number of stops: {}, values: {:?}",
       my_collatz.loops_in, my_collatz.stops, my_collatz.values
@@ -123,6 +129,8 @@ mod tests {
   #[test]
   fn test_reverse_digits() {
     let expected = 321;
-    assert_eq!(reverse_digits(123), expected)
+    assert_eq!(reverse_digits(123), expected);
+    let expected = 2;
+    assert_eq!(reverse_digits(2), expected);
   }
 }
